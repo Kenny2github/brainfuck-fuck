@@ -52,6 +52,8 @@ CELL = 0
 POS = 0
 COND = []
 LVL = 0
+FUNCS = {}
+FUNC = False
 _VERBOSE = '-v' in sys.argv
 if len(sys.argv) > 3:
     if sys.argv[3] == '--timeit':
@@ -133,6 +135,27 @@ while POS < len(PRGM):
             except IndexError: COND.append(False)
     elif PRGM[POS] == '!':
         LVL -= 1
+    elif PRGM[POS] == '@':
+        POS += 1
+        FUNCS[PRGM[POS]] = POS
+        INC = 0
+        POS += 1
+        while PRGM[POS] != '|' or INC > 0:
+            if PRGM[POS] == '@':
+                INC += 1
+            if PRGM[POS] == '|':
+                INC -= 1
+            POS += 1
+        POS -= 1
+    elif PRGM[POS] == '^':
+        POS += 1
+        prev = POS
+        POS = FUNCS[PRGM[POS]]
+        FUNC = True
+    elif PRGM[POS] == '|':
+        if FUNC:
+            FUNC = False
+            POS = prev
     POS += 1
 if len(sys.argv) > 3:
     if sys.argv[3] == '--timeit':
