@@ -1,4 +1,4 @@
-import sys
+import sys, time
 class _Getch:
     """Gets a single character from standard input.  Does not echo to the
 screen."""
@@ -13,10 +13,9 @@ screen."""
 
 class _GetchUnix:
     def __init__(self):
-        import tty, sys
-
+        import tty
     def __call__(self):
-        import sys, tty, termios
+        import tty, termios
         fd = sys.stdin.fileno()
         old_settings = termios.tcgetattr(fd)
         try:
@@ -55,10 +54,7 @@ LVL = 0
 FUNCS = {}
 FUNC = False
 _VERBOSE = '-v' in sys.argv
-if len(sys.argv) > 3:
-    if sys.argv[3] == '--timeit':
-        import time
-        print time.time()
+start = time.time()
 
 while POS < len(PRGM):
     if PRGM[POS] == '+':
@@ -157,6 +153,13 @@ while POS < len(PRGM):
             FUNC = False
             POS = prev
     POS += 1
-if len(sys.argv) > 3:
-    if sys.argv[3] == '--timeit':
-        print '\n' + str(time.time())
+end = time.time()
+if '--stats' in sys.argv:
+    print
+    print 'Space used: ' + str(len(CELLS))
+    print 'Length of program: ' + str(len(PRGM))
+    print 'Ending position of pointer: ' + str(CELL)
+    print 'Functions used:\nName\tPosition'
+    for name, pos in FUNCS.items():
+        print str(name) + '\t' + str(pos)
+    print 'Time used: ' + str(end-start) + ' seconds'
