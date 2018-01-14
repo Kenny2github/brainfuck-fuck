@@ -14,7 +14,7 @@ def main(args=None):
     if '--stats' in args:
         args.remove('--stats')
         args.append('--stats')
-    if len(args) > 1:
+    if len(args) > 0:
         if args[0] == '-c':
             prog = args[1].strip('"')
         else:
