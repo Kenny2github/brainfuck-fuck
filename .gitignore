@@ -1,3 +1,13 @@
+# Brainfuck programs
 *.bfp
 *.bf
 *.b
+
+# Compiled Python files
+*.pyc
+
+# Distribution and build artefacts
+build/*
+dist/*
+*.egg-info
+*.egg
