@@ -19,6 +19,7 @@ does exactly the same thing as this:
 besides the fact that the first one uses two cells while the second uses one.
 
 A full list of additions:
+
 * The ``=`` command.
   This sets the current cell's value to the ASCII value of the character
   after the ``=``. Therefore ``=H`` sets the cell to 72 (the ASCII value of
