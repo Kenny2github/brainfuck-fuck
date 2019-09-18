@@ -54,10 +54,13 @@ def fuck(raw_program, starting_memory=b'\0'):
                 cells[cell] = 255
         elif prog[pos] == '>':
             cell += 1
-            if len(cells) <= cell:
+            if cell >= len(cells):
                 cells.append(0)
         elif prog[pos] == '<':
             cell -= 1
+            if cell < 0:
+                cell += 1
+                cells.insert(0, 0)
         elif prog[pos] == '.':
             print(CFA(cells[cell]), end='')
         elif prog[pos] == ',':

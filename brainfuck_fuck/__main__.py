@@ -63,7 +63,7 @@ def main(args=None):
                 print(
                     r + ' ' * (6 - len(r)) + '| '
                     + ' '.join(
-                        hex(results[0][i*16+j])[2:].upper().zfill(2)
+                        hex(mem[i*16+j])[2:].upper().zfill(2)
                         for j in range(16)
                         if i*16+j < rlen
                     )
