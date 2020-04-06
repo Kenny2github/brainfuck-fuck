@@ -4,7 +4,7 @@ with open('README.rst') as f:
     long_description = f.read()
 
 setup(name='brainfuck-fuck',
-      version='2018.1.14',
+      version='2020.04.07',
       description='Just a nice little brainfuck interpreter in Python.',
       long_description=long_description,
       classifiers=[
@@ -21,7 +21,7 @@ setup(name='brainfuck-fuck',
       packages=['brainfuck_fuck'],
       entry_points={
           'console_scripts': [
-              'bf=brainfuck_fuck.bf:main',
+              'bf=brainfuck_fuck.__main__:main',
           ],
       },
 )

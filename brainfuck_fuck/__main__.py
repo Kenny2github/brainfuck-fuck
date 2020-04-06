@@ -24,7 +24,7 @@ def main(args=None):
                       help='Filename of Brainfuck program to run. Use - or '
                       'leave unspecified to read from stdin. Ignored if '
                       '-c is specified')
-    argp.add_argument('-m', nargs='?', default=None,
+    argp.add_argument('-m', nargs='?', default=None, metavar='memfile',
                       help='Filename to read initial memory from. Data is '
                       'directly translated into memory')
     argp.add_argument('-c', nargs=argparse.REMAINDER, default=None,
@@ -43,8 +43,8 @@ def main(args=None):
         prog = input('Brainfuck program:\n')
 
     mem = b'\0'
-    if args.m:
-        with open(args.m, 'rb') as memfile:
+    if args.memfile:
+        with open(args.memfile, 'rb') as memfile:
             mem = memfile.read()
 
     mem, prog, tm = brainfuck_fuck.fuck(prog, mem)
@@ -54,9 +54,9 @@ def main(args=None):
         print('Space used:', len(mem), 'cells')
         if args.dump:
             rlen = len(mem)
-            s = ' '.join(i.rjust(2, ' ') for i in '0123456789ABCDEF'[:rlen])
+            s = ' '.join(' ' + str(i) for i in '0123456789ABCDEF'[:rlen])
             print('      | ' + s)
-            print('-' * 6 + '+' + '-' * len(s))
+            print('-' * 6 + '+-' + '-' * len(s))
             rows = math.ceil(rlen / 16)
             for i in range(rows):
                 r = hex(i * 16)[2:-1].zfill(len(hex(rlen // 16 * 16)[2:]) - 1) + 'x'
@@ -68,7 +68,7 @@ def main(args=None):
                         if i*16+j < rlen
                     )
                 )
-        print('Length of parsed program:', len(prog))
+        print('Length of parsed program:', len(prog), 'bytes')
         print('Time used:', tm, 'seconds')
 
 if __name__ == '__main__':
